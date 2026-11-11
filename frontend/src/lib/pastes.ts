@@ -1,4 +1,4 @@
-export type Paste = { id: string; content: string; createdAt: string };
+export type Paste = { id: string; content: string; createdAt: string; language: string };
 
 // Browser requests stay same-origin through the Next proxy. Set API_BASE_URL
 // on the frontend server to switch the upstream for local or hosted deployment.

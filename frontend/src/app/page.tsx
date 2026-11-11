@@ -1,12 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import CodeMirror from "@uiw/react-codemirror";
-import { javascript } from "@codemirror/lang-javascript";
-import { oneDark } from "@codemirror/theme-one-dark";
 import { createPaste } from "@/lib/pastes";
+import { editorTheme, editorHighlighting } from "@/lib/editor-theme";
 
 export default function Home() {
   const router = useRouter();
@@ -29,17 +27,8 @@ export default function Home() {
 
   return (
     <main className="workspace">
-      <header className="topbar">
-        <Link className="brand" href="/" aria-label="Suvi Paste home"><span className="brand-mark">s</span><span>suvi<span className="brand-muted">.paste</span></span></Link>
-        <div className="top-meta"><span className="status-dot" /> Local draft</div>
-      </header>
-      <section className="editor-shell" aria-label="Paste editor">
-        <div className="editor-heading"><div><div className="eyebrow">A quiet place for text</div><h1>New paste</h1></div><span className="language-pill"><i /> Plain text</span></div>
-        <div className="editor-frame"><CodeMirror value={content} onChange={setContent} theme={oneDark} extensions={[javascript()]} basicSetup={{ lineNumbers: true, foldGutter: true, highlightActiveLine: true, autocompletion: true }} placeholder="Paste or write something…" minHeight="100%" /></div>
-        <div className="editor-footer"><span>⌘ Enter to save</span><span>{content.length.toLocaleString()} characters</span></div>
-      </section>
-      {message && <div className="toast" role="alert">{message}</div>}
-      <button className="save-bubble" onClick={save} disabled={saving || !content.trim()} aria-label="Save paste"><span>{saving ? "Saving" : "Save paste"}</span><span className="save-arrow">↗</span></button>
+      <CodeMirror className="full-editor" value={content} onChange={setContent} theme={editorTheme} extensions={[editorHighlighting]} basicSetup={{ lineNumbers: true, foldGutter: true, highlightActiveLine: true, autocompletion: true }} placeholder="" />
+      <button className="save-bubble" onClick={save} disabled={saving || !content.trim()} aria-label={message || "Save paste"} title={message || "Save paste"}><span>{saving ? "Saving" : "Save"}</span></button>
     </main>
   );
 }

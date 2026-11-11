@@ -10,6 +10,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/go-enry/go-enry/v2"
+
 	"pastebin/backend/internal"
 )
 
@@ -18,6 +20,27 @@ const maxPasteSize = 1 << 20
 type healthResponse struct {
 	Status string `json:"status"`
 	Name   string `json:"name"`
+}
+
+type pasteResponse struct {
+	ID        string    `json:"id"`
+	Content   string    `json:"content"`
+	CreatedAt time.Time `json:"createdAt"`
+	Language  string    `json:"language"`
+}
+
+func responseForPaste(paste database.Paste) pasteResponse {
+	language := enry.GetLanguage("", []byte(paste.Content))
+	if language == "" {
+		language = "Plain text"
+	}
+
+	return pasteResponse{
+		ID:        paste.ID,
+		Content:   paste.Content,
+		CreatedAt: paste.CreatedAt,
+		Language:  language,
+	}
 }
 
 func registerRoutes(mux *http.ServeMux, db *database.Store) {
@@ -71,7 +94,7 @@ func registerRoutes(mux *http.ServeMux, db *database.Store) {
 		}
 
 		w.WriteHeader(http.StatusCreated)
-		_ = json.NewEncoder(w).Encode(paste)
+		_ = json.NewEncoder(w).Encode(responseForPaste(paste))
 	})
 	mux.HandleFunc("GET /api/v1/pastes/{id}", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
@@ -89,7 +112,7 @@ func registerRoutes(mux *http.ServeMux, db *database.Store) {
 			return
 		}
 
-		_ = json.NewEncoder(w).Encode(paste)
+		_ = json.NewEncoder(w).Encode(responseForPaste(paste))
 	})
 }
 

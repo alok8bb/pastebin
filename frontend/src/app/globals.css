@@ -1,42 +1,18 @@
-:root { color-scheme: dark; --bg: #101110; --panel: #171917; --line: #292c29; --muted: #858a84; --text: #e8ebe6; --accent: #d1f27a; }
+:root { color-scheme: dark; --editor-mono: SFMono-Regular, Menlo, Consolas, monospace; }
 * { box-sizing: border-box; }
-html, body { margin: 0; min-height: 100%; background: var(--bg); color: var(--text); }
-body { font-family: "Avenir Next", Avenir, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-a { color: inherit; text-decoration: none; }
-.workspace { min-height: 100vh; padding: 0 7.2vw 110px; background: radial-gradient(ellipse at 50% -35%, #242922 0%, transparent 57%), var(--bg); }
-.topbar { height: 76px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #ffffff0b; }
-.brand { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 700; letter-spacing: -.04em; }
-.brand-mark { display: grid; width: 25px; height: 25px; place-items: center; border-radius: 8px; color: #12160c; background: var(--accent); font-family: Georgia, serif; font-size: 19px; font-weight: bold; font-style: italic; }
-.brand-muted { color: #888d85; font-weight: 500; }
-.top-meta, .top-actions { display: flex; gap: 9px; align-items: center; color: #858a84; font: 11px "SFMono-Regular", monospace; }
-.status-dot, .language-pill i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #a4ca5b; box-shadow: 0 0 12px #a4ca5b55; }
-.editor-shell { max-width: 940px; margin: 8.2vh auto 0; }
-.editor-heading { display: flex; justify-content: space-between; align-items: end; margin-bottom: 20px; }
-.eyebrow { color: #7e847c; font: 10px "SFMono-Regular", monospace; letter-spacing: .12em; text-transform: uppercase; }
-h1 { margin: 8px 0 0; font-size: 25px; font-weight: 500; letter-spacing: -.045em; }
-.language-pill { display: flex; align-items: center; gap: 8px; border: 1px solid #30332f; border-radius: 20px; padding: 7px 10px; color: #9da29b; font: 10px "SFMono-Regular", monospace; }
-.language-pill i { width: 5px; height: 5px; }
-.editor-frame { min-height: 58vh; overflow: hidden; border: 1px solid #30332f; border-radius: 12px; background: #17191b; box-shadow: 0 24px 80px #0003; }
-.editor-frame .cm-editor { min-height: 58vh; background: #17191b; color: #d6d8db; font: 13px/1.75 "SFMono-Regular", monospace; }
-.editor-frame .cm-scroller { overflow: auto; }
-.editor-frame .cm-gutters { border-right: 1px solid #ffffff0a; background: #17191b; color: #565d62; padding: 14px 5px 14px 11px; }
-.editor-frame .cm-content { padding: 14px 0; }
-.editor-frame .cm-line { padding-left: 12px; }
-.editor-frame .cm-activeLineGutter, .editor-frame .cm-activeLine { background: #ffffff06; }
-.editor-frame .cm-cursor { border-left-color: var(--accent); }
-.editor-frame .cm-focused { outline: none; }
-.editor-frame .cm-placeholder { color: #515650; }
-.editor-footer { display: flex; justify-content: space-between; align-items: center; padding: 12px 3px; color: #666c65; font: 10px "SFMono-Regular", monospace; }
-.save-bubble { position: fixed; right: 7.2vw; top: 93px; display: flex; align-items: center; gap: 15px; border: 0; border-radius: 999px; padding: 8px 9px 8px 17px; background: var(--accent); color: #1b2112; font: 600 12px "Avenir Next", sans-serif; cursor: pointer; box-shadow: 0 5px 28px #b9df6a30; transition: transform .18s, opacity .18s; }
-.save-bubble:hover:not(:disabled) { transform: translateY(-2px); }
-.save-bubble:disabled { opacity: .48; cursor: default; }
-.save-arrow { display: grid; place-items: center; border-radius: 50%; width: 25px; height: 25px; background: #1c2412; color: var(--accent); font-size: 15px; }
-.toast { position: fixed; left: 50%; bottom: 30px; transform: translateX(-50%); border: 1px solid #693e3e; border-radius: 9px; background: #241818; padding: 11px 16px; color: #f1baba; font-size: 12px; }
-.top-actions { gap: 19px; }
-.read-only-label { color: #a0a69e; }
-.new-link, .raw-link { color: var(--accent); }
-.new-link span { margin-left: 6px; }
-.paste-id { font: 13px "SFMono-Regular", monospace; color: #d4d9d1; letter-spacing: 0; }
-.empty-state { display: grid; min-height: 58vh; place-items: center; color: #a8aaa4; border: 1px solid var(--line); border-radius: 12px; background: #17191b; font-size: 14px; }
-.raw-document { margin: 0; min-height: 100vh; padding: 24px; background: #111; color: #e0e4dc; white-space: pre-wrap; overflow-wrap: anywhere; font: 13px/1.65 "SFMono-Regular", monospace; }
-@media (max-width: 640px) { .workspace { padding: 0 20px 100px; } .topbar { height: 64px; } .editor-shell { margin-top: 7vh; } .editor-frame, .editor-frame .cm-editor, .empty-state { min-height: 67vh; } .save-bubble { right: 20px; top: 78px; } .top-actions { gap: 11px; } }
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: #0a0a0a; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+.workspace { position: relative; width: 100vw; height: 100dvh; background: #0a0a0a; }
+.full-editor, .full-editor .cm-editor { width: 100%; height: 100%; }
+.full-editor .cm-editor { background: #0a0a0a; color: #ededed; font: 13px/1.7 var(--editor-mono); }
+.full-editor .cm-scroller { overflow: auto; }
+.full-editor .cm-gutters { border-right: 1px solid #ffffff0b; background: #0a0a0a; color: #525252; padding-left: 8px; }
+.full-editor .cm-content { padding: 18px 0 24px; }
+.full-editor .cm-line { padding-left: 10px; }
+.full-editor .cm-activeLineGutter, .full-editor .cm-activeLine { background: #ffffff06; }
+.full-editor .cm-cursor { border-left-color: #38bdf8; }
+.full-editor .cm-focused { outline: none; }
+.save-bubble { position: fixed; z-index: 5; top: 18px; right: 20px; border: 1px solid #7dd3fc; border-radius: 999px; padding: 10px 18px; background: #38bdf8; color: #082f49; font: 600 13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; cursor: pointer; box-shadow: 0 3px 18px #0008; }
+.save-bubble:disabled { opacity: .55; cursor: default; }
+.load-error { padding: 18px; color: #e4a4a4; font: 13px SFMono-Regular, Menlo, Consolas, monospace; }
+.raw-document { margin: 0; min-height: 100vh; padding: 16px; background: #111; color: #e0e4dc; white-space: pre-wrap; overflow-wrap: anywhere; font: 13px/1.65 SFMono-Regular, Menlo, Consolas, monospace; }
