@@ -1,4 +1,2 @@
-*
-!Dockerfile
-!go.mod
-!main.go
+.git
+coverage.out

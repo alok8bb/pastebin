@@ -1,24 +1,27 @@
 package main
 
 import (
-	"encoding/json"
+	"context"
 	"log"
 	"net/http"
 	"os"
 	"time"
+
+	"pastebin/backend/internal"
 )
 
-type healthResponse struct {
-	Status string `json:"status"`
-	Name   string `json:"name"`
-}
-
 func main() {
+	startupCtx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	db, err := database.Open(startupCtx, os.Getenv("DATABASE_URL"))
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+
 	mux := http.NewServeMux()
-	mux.HandleFunc("GET /health", func(w http.ResponseWriter, _ *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		_ = json.NewEncoder(w).Encode(healthResponse{Status: "ok", Name: "Pastebin by Suvi"})
-	})
+	registerRoutes(mux, db)
 
 	addr := ":" + envOr("PORT", "8080")
 	server := &http.Server{
