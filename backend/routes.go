@@ -30,10 +30,7 @@ type pasteResponse struct {
 }
 
 func responseForPaste(paste database.Paste) pasteResponse {
-	language := enry.GetLanguage("", []byte(paste.Content))
-	if language == "" {
-		language = "Plain text"
-	}
+	language := detectLanguage(paste.Content)
 
 	return pasteResponse{
 		ID:        paste.ID,
@@ -41,6 +38,13 @@ func responseForPaste(paste database.Paste) pasteResponse {
 		CreatedAt: paste.CreatedAt,
 		Language:  language,
 	}
+}
+
+func detectLanguage(content string) string {
+	if language := enry.GetLanguage("", []byte(content)); language != "" {
+		return language
+	}
+	return "Plain text"
 }
 
 func registerRoutes(mux *http.ServeMux, db *database.Store) {

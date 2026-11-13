@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const apiBase = (process.env.API_BASE_URL || "http://localhost:8080/api/v1").replace(/\/$/, "");
+const apiBase = (process.env.API_BASE_URL || "http://localhost:8081/api/v1").replace(/\/$/, "");
 type RouteContext = { params: Promise<{ path: string[] }> };
 
 async function proxy(request: Request, context: RouteContext) {

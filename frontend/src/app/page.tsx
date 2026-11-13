@@ -29,6 +29,7 @@ export default function Home() {
     <main className="workspace">
       <CodeMirror className="full-editor" value={content} onChange={setContent} theme={editorTheme} extensions={[editorHighlighting]} basicSetup={{ lineNumbers: true, foldGutter: true, highlightActiveLine: true, autocompletion: true }} placeholder="" />
       <button className="save-bubble" onClick={save} disabled={saving || !content.trim()} aria-label={message || "Save paste"} title={message || "Save paste"}><span>{saving ? "Saving" : "Save"}</span></button>
+      {message && <div className="save-error" role="alert">{message}</div>}
     </main>
   );
 }
