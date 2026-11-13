@@ -3,8 +3,9 @@ package database
 import (
 	"context"
 	"crypto/rand"
-	"encoding/hex"
 	"errors"
+	"math/big"
+	"strings"
 	"time"
 
 	"github.com/jackc/pgx/v5"
@@ -73,7 +74,9 @@ func (s *Store) CreatePaste(ctx context.Context, content string) (Paste, error) 
 		return Paste{}, err
 	}
 
-	paste := Paste{ID: hex.EncodeToString(idBytes[:]), Content: content}
+	id := new(big.Int).SetBytes(idBytes[:]).Text(62)
+	id = strings.Repeat("0", 22-len(id)) + id
+	paste := Paste{ID: id, Content: content}
 	err := s.pool.QueryRow(ctx,
 		`INSERT INTO pastes (id, content) VALUES ($1, $2) RETURNING created_at`,
 		paste.ID,
