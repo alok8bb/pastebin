@@ -7,8 +7,6 @@ services:
       API_BASE_URL: http://backend:8080/api/v1
     expose:
       - "3000"
-    ports:
-      - "127.0.0.1:3000:3000"
 
   backend:
     build:
